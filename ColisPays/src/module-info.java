@@ -1,9 +1,0 @@
-/**
- * 
- */
-/**
- * @author rmuller
- *
- */
-module ColisPays {
-}
