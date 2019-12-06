@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 public class Regate extends JFrame implements ActionListener {
 	private JPanel panFirst;
+	private JPanel panBtn;
 	private JButton btnRetour;
 	private JButton leBtn;
 	private Accueil fenAccueil;
@@ -19,16 +20,19 @@ public class Regate extends JFrame implements ActionListener {
 		this.setSize(500,400);
 		this.setResizable(false);
 		panFirst = new JPanel();
+		panFirst.setLayout(new BorderLayout());
+		panBtn = new JPanel();
 		lesVoiliers = new ArrayList<Bateau>();
 		addVoiliers();
+		panBtn.setLayout(new GridLayout(lesVoiliers.size(),1));
 		for(Bateau rs : lesVoiliers) {
 			leBtn = new JButton(rs.getNomBateau());
-			panFirst.add(leBtn);
+			panBtn.add(leBtn);
 		}
 		btnRetour = new JButton("Retour à l'Accueil");
 		btnRetour.addActionListener(this);
-		panFirst.add(btnRetour);
-		this.getContentPane().add(panFirst, "Center");
+		panFirst.add(panBtn, BorderLayout.WEST);
+		this.getContentPane().add(panFirst);
 		this.setVisible(true);
 	}
 	
