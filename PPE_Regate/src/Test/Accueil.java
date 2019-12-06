@@ -29,9 +29,13 @@ public class Accueil extends JFrame implements ActionListener {
 		btnQuit = new JButton("Quitter");
 		btnHisto = new JButton("Historique");
 		lblAccueil = new JLabel("Bienvenue");
+		btnInscri.addActionListener(this);
 		panMid.add(btnInscri);
+		btnLancer.addActionListener(this);
 		panMid.add(btnLancer);
+		btnQuit.addActionListener(this);
 		panSud.add(btnQuit);
+		btnHisto.addActionListener(this);
 		panSud.add(btnHisto);
 		panNord.add(lblAccueil);
 		this.getContentPane().add(panNord, "North");
@@ -40,7 +44,8 @@ public class Accueil extends JFrame implements ActionListener {
 		this.setVisible(true);
 	}
 	
-	public void actionPerfromed(ActionEvent e) {
+	@Override
+	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnInscri) {
 			
 		} else if(e.getSource() == btnLancer) {
@@ -50,11 +55,14 @@ public class Accueil extends JFrame implements ActionListener {
 		} else if(e.getSource() == btnHisto) {
 			
 		}
+		
 	}
 	
 	public static void main(String[] args) {
 		new Accueil();
 	}
+
+
 
 
 }
