@@ -1,28 +1,29 @@
 package Test;
 
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JFrame;
+import javax.swing.*;
+import java.awt.*;
 
-public class Regate extends JFrame implements ActionListener {
-	private JPanel panFirst;
+public class Historique extends JFrame implements ActionListener {
+	private JPanel panHisto;
 	private JButton btnRetour;
 	private Accueil fenAccueil;
 	
-	public Regate() {
-		this.setTitle("Régate");
+	public Historique() {
+		this.setTitle("Historique des Régates");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(500,400);
 		this.setResizable(false);
-		panFirst = new JPanel();
+		panHisto = new JPanel();
 		btnRetour = new JButton("Retour à l'Accueil");
 		btnRetour.addActionListener(this);
-		panFirst.add(btnRetour);
-		this.getContentPane().add(panFirst, "Center");
+		panHisto.add(btnRetour);
+		this.getContentPane().add(panHisto, "Center");
 		this.setVisible(true);
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnRetour) {
@@ -34,7 +35,7 @@ public class Regate extends JFrame implements ActionListener {
 	}
 	
 	public static void main(String[] args) {
-		new Regate();
+		new Historique();
 	}
 
 }
