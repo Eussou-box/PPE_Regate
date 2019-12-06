@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 public class Regate extends JFrame implements ActionListener {
 	private JPanel panFirst;
 	private JButton btnRetour;
+	private Accueil fenAccueil;
 	
 	public Regate() {
 		this.setTitle("Régate");
@@ -18,20 +19,22 @@ public class Regate extends JFrame implements ActionListener {
 		btnRetour = new JButton("Retour à l'accueil");
 		btnRetour.addActionListener(this);
 		panFirst.add(btnRetour);
-		this.getContentPane().add(panFirst, "CENTER");
+		this.getContentPane().add(panFirst, "Center");
 		this.setVisible(true);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnRetour) {
-			
+			fenAccueil = new Accueil();
+			this.dispose();
+			fenAccueil.setVisible(true);
 		}
 		
 	}
 	
 	public static void main(String[] args) {
-		new Regate();//yo
+		new Regate();
 	}
 
 }
