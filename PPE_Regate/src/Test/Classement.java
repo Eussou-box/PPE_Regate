@@ -3,20 +3,25 @@ package Test;
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.event.*;
 
-public class Classement extends JFrame {
+public class Classement extends JFrame implements ActionListener {
 	private JPanel panneau;
 	private JPanel panBtn;
 	private JButton btnSave;
 	private JButton btnImpr;
 	private JButton btnRetour;
+	private Accueil fenAccueil;
 	
 	public Classement() {
 		panneau = new JPanel();
 		panBtn = new JPanel();
 		btnSave = new JButton("Save");
+		btnSave.addActionListener(this);
 		btnImpr = new JButton("Imprimer");
+		btnImpr.addActionListener(this);
 		btnRetour = new JButton("Retour accueil");
+		btnRetour.addActionListener(this);
 		panBtn.setLayout(new FlowLayout());
 		panBtn.add(btnSave);
 		panBtn.add(btnImpr);
@@ -31,8 +36,21 @@ public class Classement extends JFrame {
 		this.getContentPane().add(panneau);
 	}
 	
+	public void actionPerformed(ActionEvent e) { 
+		if(e.getSource() == btnSave) {
+			
+		} else if(e.getSource() == btnImpr) {
+			
+		} else if(e.getSource() == btnRetour) {
+			this.dispose();
+			fenAccueil = new Accueil();
+			fenAccueil.setVisible(true);
+		}
+	}
 	public static void main(String[] args) {
 		new Classement();
 		
 	}
+
+
 }
