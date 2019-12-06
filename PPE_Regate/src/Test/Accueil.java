@@ -16,6 +16,8 @@ public class Accueil extends JFrame implements ActionListener {
 	private JButton btnHisto;
 	private JLabel lblAccueil;
 	private Regate fenRegate;
+	private Inscriptions fenInscri;
+	private Historique fenHisto;
 	
 	public Accueil() {
 		this.setTitle("Accueil");
@@ -48,8 +50,9 @@ public class Accueil extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnInscri) {
+			fenInscri = new Inscriptions();
 			this.setVisible(false);
-			
+			fenInscri.setVisible(true);
 		} else if(e.getSource() == btnLancer) {
 			fenRegate = new Regate();
 			this.dispose();
@@ -57,8 +60,9 @@ public class Accueil extends JFrame implements ActionListener {
 		} else if(e.getSource() == btnQuit) {
 			this.dispose();
 		} else if(e.getSource() == btnHisto) {
+			fenHisto = new Historique();
 			this.setVisible(false);
-			
+			fenHisto.setVisible(true);
 		}
 		
 	}
