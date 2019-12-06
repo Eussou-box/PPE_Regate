@@ -51,7 +51,7 @@ public class Accueil extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnInscri) {
 			fenInscri = new Inscriptions();
-			this.setVisible(false);
+			this.dispose();
 			fenInscri.setVisible(true);
 		} else if(e.getSource() == btnLancer) {
 			fenRegate = new Regate();
@@ -61,7 +61,7 @@ public class Accueil extends JFrame implements ActionListener {
 			this.dispose();
 		} else if(e.getSource() == btnHisto) {
 			fenHisto = new Historique();
-			this.setVisible(false);
+			this.dispose();
 			fenHisto.setVisible(true);
 		}
 		
