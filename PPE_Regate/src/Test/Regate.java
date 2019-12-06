@@ -24,7 +24,7 @@ public class Regate extends JFrame implements ActionListener {
 	}
 	
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) { //
 		if(e.getSource() == btnRetour) {
 			fenAccueil = new Accueil();
 			this.dispose();
