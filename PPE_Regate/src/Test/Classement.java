@@ -35,7 +35,7 @@ public class Classement extends JFrame implements ActionListener {
 		this.getContentPane().add(panneau);
 	}
 	
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) { //action
 		if(e.getSource() == btnSave) {
 			
 		} else if(e.getSource() == btnImpr) {
