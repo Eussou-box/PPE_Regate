@@ -47,12 +47,15 @@ public class Accueil extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnInscri) {
+			this.setVisible(false);
 			
 		} else if(e.getSource() == btnLancer) {
+			this.setVisible(false);
 			
 		} else if(e.getSource() == btnQuit) {
-			
+			this.dispose();
 		} else if(e.getSource() == btnHisto) {
+			this.setVisible(false);
 			
 		}
 		
