@@ -11,6 +11,7 @@ public class Classement extends JFrame implements ActionListener {
 	private JButton btnSave;
 	private JButton btnImpr;
 	private JButton btnRetour;
+	private Accueil fenAccueil;
 	
 	public Classement() {
 		panneau = new JPanel();
@@ -41,7 +42,9 @@ public class Classement extends JFrame implements ActionListener {
 		} else if(e.getSource() == btnImpr) {
 			
 		} else if(e.getSource() == btnRetour) {
-			
+			this.dispose();
+			fenAccueil = new Accueil();
+			fenAccueil.setVisible(true);
 		}
 	}
 	public static void main(String[] args) {
