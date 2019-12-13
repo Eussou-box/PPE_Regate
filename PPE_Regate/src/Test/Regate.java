@@ -37,16 +37,20 @@ public class Regate extends JFrame implements ActionListener {
 	}
 	
 	public void addVoiliers() {
-		lesVoiliers.add(new Bateau("Les Joyeux Coquins","1"));
-		lesVoiliers.add(new Bateau("Le paquebotte","1"));
-		lesVoiliers.add(new Bateau("Les SIO Skippers","1"));
-		lesVoiliers.add(new Bateau("Fnatic Voilier","1"));
-		lesVoiliers.add(new Bateau("SEND NUDES","1"));
-		lesVoiliers.add(new Bateau("Les Lolis For Ever","1"));
-		lesVoiliers.add(new Bateau("Nan mais Allo quoi","1"));
-		lesVoiliers.add(new Bateau("I'm wet","1"));
+		lesVoiliers.add(new Bateau("Les Joyeux Coquins","1", ""));
+		lesVoiliers.add(new Bateau("Le paquebotte","1", ""));
+		lesVoiliers.add(new Bateau("Les SIO Skippers","1", ""));
+		lesVoiliers.add(new Bateau("Fnatic Voilier","1", ""));
+		lesVoiliers.add(new Bateau("SEND NUDES","1", ""));
+		lesVoiliers.add(new Bateau("Les Lolis For Ever","1", ""));
+		lesVoiliers.add(new Bateau("Nan mais Allo quoi","1", ""));
+		lesVoiliers.add(new Bateau("I'm wet","1", ""));
 	}
 	
+	public void chronometre()
+	{
+		
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnRetour) {
