@@ -24,6 +24,7 @@ public class Historique extends JFrame implements ActionListener {
 		this.setVisible(true);
 	}
 
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnRetour) {
