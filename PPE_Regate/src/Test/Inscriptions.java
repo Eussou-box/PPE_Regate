@@ -27,7 +27,7 @@ public class Inscriptions extends JFrame implements ActionListener {
 	public Inscriptions() {
 		this.setTitle("Historique des Régates");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(500,400);
+		this.setSize(600,500);
 		this.setResizable(false);
 		lePanel = new JPanel();
 		lePanel.setLayout(new BorderLayout(0,0));
