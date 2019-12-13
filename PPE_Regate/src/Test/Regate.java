@@ -9,16 +9,29 @@ import java.awt.event.ActionListener;
 public class Regate extends JFrame implements ActionListener {
 	private JPanel panFirst;
 	private JPanel panBtn;
+	private JPanel panChrono;
 	private JButton btnRetour;
 	private JButton leBtn;
+	private JButton btnStart;
+	private JButton btnStop;
+	private JLabel lblChrono;
 	private Accueil fenAccueil;
 	private ArrayList<Bateau> lesVoiliers;
+	private chronoTest leChrono;
 	
 	public Regate() {
 		this.setTitle("Régate");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(500,400);
 		this.setResizable(false);
+		leChrono = new chronoTest();
+		btnStart = new JButton("Start");
+		btnStart.addActionListener(this);
+		btnStop = new JButton("Stop");
+		btnStop.addActionListener(this);
+		lblChrono = new JLabel();
+		panChrono = new JPanel();
+		panChrono.setLayout(new BorderLayout());
 		panFirst = new JPanel();
 		panFirst.setLayout(new BorderLayout());
 		panBtn = new JPanel();
