@@ -73,9 +73,13 @@ public class Inscriptions extends JFrame implements ActionListener {
 			this.dispose();
 			fenAccueil.setVisible(true);
 		} else if(e.getSource() == btnSave) {
-			//enregistrer toutes les infos dans la bdd + remettre les tf à zéro
+			tfNomVoil.setText("");
+			tfClasse.setText("");
+			tfRating.setText("");
+			tfNumVoil.setText("");
+			tfNomSkip.setText("");
+			//enregistrer toutes les infos dans la bdd
 		}
-		
 	}
 	
 	public static void main(String[] args) {
