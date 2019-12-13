@@ -83,9 +83,12 @@ public class Classement extends JFrame implements ActionListener {
 		}
 	}
 	
+	public void remplirClassement() {
+		
+	}
+	
 	public static void main(String[] args) {
 		new Classement();
-		
 	}
 
 

@@ -22,7 +22,7 @@ public class Accueil extends JFrame implements ActionListener {
 	public Accueil() {
 		this.setTitle("Accueil");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(600,500); //Taille Régate inchangée attention
+		this.setSize(500,400);
 		this.setResizable(false);
 		panNord = new JPanel();
 		panMid = new JPanel();

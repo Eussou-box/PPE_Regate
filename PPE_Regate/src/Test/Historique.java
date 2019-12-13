@@ -14,7 +14,7 @@ public class Historique extends JFrame implements ActionListener {
 	public Historique() {
 		this.setTitle("Historique des Régates");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(600,500);
+		this.setSize(500,400);
 		this.setResizable(false);
 		panHisto = new JPanel();
 		btnRetour = new JButton("Retour à l'Accueil");
