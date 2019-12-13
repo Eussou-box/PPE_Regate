@@ -5,15 +5,18 @@ import java.util.*;
 public class Bateau {
 	private String nomBateau;
 	private String classeBat;
+	private String timerBateau;
 	
 	public Bateau() {
 		nomBateau = "";
 		classeBat = "";
+		timerBateau = "";
 	}
 	
-	public Bateau(String leBat, String leType) {
+	public Bateau(String leBat, String leType, String timeBat) {
 		nomBateau = leBat;
 		classeBat = leType;
+		timerBateau = timeBat;
 	}
 
 	public String getNomBateau() {
@@ -30,6 +33,14 @@ public class Bateau {
 
 	public void setClasseBat(String classeBat) {
 		this.classeBat = classeBat;
+	}
+
+	public String getTimerBateau() {
+		return timerBateau;
+	}
+
+	public void setTimerBateau(String timerBateau) {
+		this.timerBateau = timerBateau;
 	}
 	
 	
