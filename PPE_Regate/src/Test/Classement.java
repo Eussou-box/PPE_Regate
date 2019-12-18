@@ -80,15 +80,28 @@ public class Classement extends JFrame implements ActionListener {
 			fenAccueil = new Accueil();
 			fenAccueil.setVisible(true);
 		} else if(e.getSource() == btnImprPdf) {
-			
+			// aura t on seulement le temps ?
 		} else if(e.getSource() == btnSave) {
-			
+			// same pour save dans un doc ?
 		}
 	}
 	
-	public void remplirClassement() {
-		
-	}
+	public void remplirClassement() { //need some getters and setters dans Régate, pas osé toucher
+		String class1 = "";
+		String class2 = "";
+		int i = 0;
+		for(Bateau b : Regate.getLesVoiliers) {
+			i++;
+			if(b.getClasseBat() == 1) {
+				class1 += i + ". " + b.getNomBateau() + " - " + b.getTimerBateau() + "\n";
+			} else if(b.getClasseBat() == 2) {
+				class2 += i + ". " + b.getNomBateau() + " - " + b.getTimerBateau() + "\n";
+			}
+		}
+		classCat1SH.setText(class1);
+		classCat2SH.setText(class2);
+	} //dunno si faire 2 méthodes pour remplir classement AH et SH ou juste une (i guess 1 plus opti
+	// avec 1 methode juste pour faire le calcul du handicap
 	
 	public static void main(String[] args) {
 		new Classement();

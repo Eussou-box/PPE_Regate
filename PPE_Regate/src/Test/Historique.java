@@ -10,6 +10,7 @@ public class Historique extends JFrame implements ActionListener {
 	private JPanel panHisto;
 	private JButton btnRetour;
 	private Accueil fenAccueil;
+	// peut etre ajouter un truc de recherche des anciens classements de regate ? (selon date, skipper, etc ?)
 	
 	public Historique() {
 		this.setTitle("Historique des Régates");
@@ -23,6 +24,8 @@ public class Historique extends JFrame implements ActionListener {
 		this.getContentPane().add(panHisto, "Center");
 		this.setVisible(true);
 	}
+	
+	
 
 
 	@Override

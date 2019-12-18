@@ -2,6 +2,8 @@ package Test;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+
 import javax.swing.JFrame;
 import javax.swing.*;
 import java.awt.*;
@@ -23,6 +25,7 @@ public class Inscriptions extends JFrame implements ActionListener {
 	private JLabel lblNomSkip;
 	private JTextField tfNomSkip;
 	private JButton btnSave;
+//	private OuvreBDD connexion = new OuvreBDD("Database.db");
 	
 	public Inscriptions() {
 		this.setTitle("Historique des Régates");
@@ -65,6 +68,22 @@ public class Inscriptions extends JFrame implements ActionListener {
 		this.getContentPane().add(lePanel);
 		this.setVisible(true);
 	}
+	
+//	public void addInfos() { //need help ;;
+//        String query = "";
+//        query += "INSERT INTO TABLE VALUES (";
+//        query += "'" + tfNomVoil.getText() + "', ";
+//        query += "'" + tfClasse.getText() + "', ";
+//        query += "'" + tfRating.getText() + "', ";
+//        query += "'" + tfNumVoil.getText() + "', ";
+//        query += "'" + tfNomSkip.getText() + "' )";
+//        try {
+//            statement.executeUpdate(query);
+//        } catch (SQLException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//    }
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -72,13 +91,17 @@ public class Inscriptions extends JFrame implements ActionListener {
 			fenAccueil = new Accueil();
 			this.dispose();
 			fenAccueil.setVisible(true);
+			//tout effacer ce qui a été entré dans la bdd pour cette régate ou créer statut "annulé"
 		} else if(e.getSource() == btnSave) {
+//			connexion.connect();
+//			this.addInfos();
+//			connexion.close();
 			tfNomVoil.setText("");
 			tfClasse.setText("");
 			tfRating.setText("");
 			tfNumVoil.setText("");
 			tfNomSkip.setText("");
-			//enregistrer toutes les infos dans la bdd
+			//enregistrer toutes les infos dans la bdd -> j'ai essayé un truc XD
 		}
 	}
 	

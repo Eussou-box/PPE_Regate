@@ -38,4 +38,16 @@ public class OuvreBDD {
 	            e.printStackTrace();
 	        }
 	    }
+	    
+//	    public ResultSet query(String request) {
+//	        ResultSet resultat = null;
+//	        try {
+//	            resultat = statement.executeQuery(request);
+//	        } catch (SQLException e) {
+//	            e.printStackTrace();
+//	            System.out.println("Erreur dans la request : " + request);
+//	        }
+//	        return resultat;
+//	  
+//	    }
 	}
