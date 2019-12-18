@@ -86,22 +86,39 @@ public class Classement extends JFrame implements ActionListener {
 		}
 	}
 	
-	public void remplirClassement() { //need some getters and setters dans Régate, pas osé toucher
-		String class1 = "";
-		String class2 = "";
-		int i = 0;
-		for(Bateau b : Regate.getLesVoiliers) {
-			i++;
-			if(b.getClasseBat() == 1) {
-				class1 += i + ". " + b.getNomBateau() + " - " + b.getTimerBateau() + "\n";
-			} else if(b.getClasseBat() == 2) {
-				class2 += i + ". " + b.getNomBateau() + " - " + b.getTimerBateau() + "\n";
-			}
-		}
-		classCat1SH.setText(class1);
-		classCat2SH.setText(class2);
-	} //dunno si faire 2 méthodes pour remplir classement AH et SH ou juste une (i guess 1 plus opti
-	// avec 1 methode juste pour faire le calcul du handicap
+//	public String calculTempsCompose(Bateau b) {
+//		int r = b.getRatingBateau; 
+//		String tpsCompo = ""; //dunno the type
+//		long calcultps = null;
+//		double handicap = 5143 / (Math.sqrt(r) + 3,5) * distance; //voir où et comment ajouter la distance
+//		calcultps = b.getTimerBateau + handicap;
+//		return tpsCompo; //need le tp datetime pour tout convertir
+//	}
+//	
+//	public void remplirClassement() { //need some getters and setters dans Régate, pas osé toucher
+//		String class1 = "";
+//		String class1Compo = "";
+//		String class2 = "";
+//		String class2Compo = "";
+//		int i = 0;
+//		for(Bateau b : Regate.getLesVoiliers) {
+//			i++;
+//			if(b.getClasseBat() == 1) {
+//				class1 += i + ". " + b.getNomBateau() + " - " + b.getTimerBateau() + "\n";
+//				class1Compo += i + ". " + b.getNomBateau() + " - " + calculTempsCompose(b) + "\n";
+//				//prendre en compte le changement d'ordre grace au handicap
+//			} else if(b.getClasseBat() == 2) {
+//				class2 += i + ". " + b.getNomBateau() + " - " + b.getTimerBateau() + "\n";
+//				class2Compo += i + ". " + b.getNomBateau() + " - " + calculTempsCompose(b) + "\n";
+//				//prendre en compte le changement d'ordre grace au handicap
+//			}
+//		}
+//		classCat1SH.setText(class1);
+//		classCat1AH.setText(class1Compo);
+//		classCat2SH.setText(class2);
+//		classCat2AH.setText(class2Compo);
+//	} //dunno si faire 2 méthodes pour remplir classement AH et SH ou juste une (i guess 1 plus opti
+	// avec 1 methode juste pour faire le calcul du temps compense
 	
 	public static void main(String[] args) {
 		new Classement();

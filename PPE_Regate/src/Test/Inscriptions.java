@@ -101,7 +101,7 @@ public class Inscriptions extends JFrame implements ActionListener {
 			tfRating.setText("");
 			tfNumVoil.setText("");
 			tfNomSkip.setText("");
-			//enregistrer toutes les infos dans la bdd -> j'ai essayé un truc XD
+			//enregistrer toutes les infos dans la bdd -> tester tout ce bordel
 		}
 	}
 	

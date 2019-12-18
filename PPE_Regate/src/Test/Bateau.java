@@ -4,19 +4,22 @@ import java.util.*;
 
 public class Bateau {
 	private String nomBateau;
-	private String classeBat;
-	private String timerBateau;
+	private String classeBat; // int ou string ?
+	private String timerBateau; //pas mieux de mettre en mode SimpleDateFormat("HH:mm:ss:SSSS") ?
+//	private String ratingBateau; //int ou string ? 
 	
 	public Bateau() {
 		nomBateau = "";
 		classeBat = "";
 		timerBateau = "";
+//		ratingBateau = "";
 	}
 	
-	public Bateau(String leBat, String leType, String timeBat) {
+	public Bateau(String leBat, String leType, String timeBat) { //ajouter String rating
 		nomBateau = leBat;
 		classeBat = leType;
 		timerBateau = timeBat;
+//		ratingBateau = rating;
 	}
 
 	public String getNomBateau() {
@@ -43,5 +46,12 @@ public class Bateau {
 		this.timerBateau = timerBateau;
 	}
 	
+//	public String getRatingBateau() {
+//		return ratingBateau;	
+//	}
+//	
+//	public void setRatingBateau(String ratingBateau) {
+//		this.ratingBateau = ratingBateau;
+//	}
 	
 }
