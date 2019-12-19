@@ -23,6 +23,7 @@ public class Regate extends JFrame implements ActionListener {
 	private JButton btnPause;
 	private JButton btnResume;
 	private JButton btnStop;
+	private JButton btnAbandon;
 	private JLabel lblChrono;
 	private JLabel lblTop;
 	private JTextField tfArrive;
@@ -61,6 +62,8 @@ public class Regate extends JFrame implements ActionListener {
 		btnStop.addActionListener(this);
 		btnRetour = new JButton("Retour à l'Accueil");
 		btnRetour.addActionListener(this);
+		btnAbandon = new JButton("Abandon");
+		btnAbandon.addActionListener(this);
 		lblChrono = new JLabel();
 		lblTop = new JLabel("Bienvenue sur la page de gestion de la régate");
 		lblFont1 = new Font("Arial", Font.BOLD, 20);
@@ -79,6 +82,7 @@ public class Regate extends JFrame implements ActionListener {
 		panBtnChrono.add(btnStop);
 		panBtnChrono.add(btnPause);
 		panBtnChrono.add(btnResume);
+		panBtnChrono.add(btnAbandon);
 		panChrono.setLayout(new BorderLayout());
 		panChrono.add(lblChrono, BorderLayout.NORTH);
 		panChrono.add(panBtnChrono, BorderLayout.CENTER);
