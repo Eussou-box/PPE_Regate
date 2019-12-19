@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -86,7 +87,7 @@ public class Classement extends JFrame implements ActionListener {
 		}
 	}
 	
-	public String calculTempsCompose() {
+	public int calculTempsCompose() throws SQLException, ParseException {
 		double distance = 0.0;
 		int tpsCompo = 0;
 		int r = 0; 
