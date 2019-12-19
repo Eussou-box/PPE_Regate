@@ -17,6 +17,7 @@ public class Regate extends JFrame implements ActionListener {
 	private JPanel panBtn;
 	private JPanel panChrono;
 	private JPanel panBtnChrono;
+	private JPanel panDialog;
 	private JButton btnRetour;
 	private JButton leBtn;
 	private JButton btnStart;
@@ -24,9 +25,12 @@ public class Regate extends JFrame implements ActionListener {
 	private JButton btnResume;
 	private JButton btnStop;
 	private JButton btnAbandon;
+	private JButton btnOk;
 	private JLabel lblChrono;
 	private JLabel lblTop;
 	private JTextField tfArrive;
+	private JTextField tfIncub;
+	private JDialog dialIncub;
 	private Accueil fenAccueil;
 	private ArrayList<String> lesNumVoiliers;
 	private ArrayList<Bateau> lesVoiliers;
@@ -38,6 +42,7 @@ public class Regate extends JFrame implements ActionListener {
 	private int heure;
 	private DecimalFormat df;
 	private testCoBDD bdd;
+	private int incub;
 	
 	public Regate() throws SQLException {
 		this.setTitle("Régate");
@@ -71,8 +76,30 @@ public class Regate extends JFrame implements ActionListener {
 		panChrono = new JPanel();
 		panFirst = new JPanel();
 		panBtn = new JPanel();
+		panDialog = new JPanel();
 		tfArrive = new JTextField();
 		lblChrono.setText(timerEnHMS());
+		dialIncub = new JDialog();
+		dialIncub.setSize(300, 200);
+		dialIncub.setResizable(false);
+		tfIncub = new JTextField();
+		tfIncub.setSize(140, 90);
+		btnOk = new JButton("Ok");
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				incub = Integer.valueOf(tfIncub.getText());
+				System.out.println(incub);
+					bdd.connect();
+					try {
+						int i = testCoBDD.getSt().executeUpdate("UPDATE bateau tempsBateau SET tempsBateau = '00:00:00' WHERE numVoilier =" + " " + incub + ";");
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					bdd.close();
+					dialIncub.dispose();
+				}
+		});
 		// -----------------------------
 		// Mise en place composant graphique
 		lblTop.setFont(lblFont1);
@@ -83,6 +110,9 @@ public class Regate extends JFrame implements ActionListener {
 		panBtnChrono.add(btnPause);
 		panBtnChrono.add(btnResume);
 		panBtnChrono.add(btnAbandon);
+		panDialog.setLayout(new BorderLayout());
+		panDialog.add(tfIncub, BorderLayout.NORTH);
+		panDialog.add(btnOk, BorderLayout.SOUTH);
 		panChrono.setLayout(new BorderLayout());
 		panChrono.add(lblChrono, BorderLayout.NORTH);
 		panChrono.add(panBtnChrono, BorderLayout.CENTER);
@@ -102,6 +132,7 @@ public class Regate extends JFrame implements ActionListener {
 		panFirst.add(panBtn, BorderLayout.WEST);
 		panFirst.add(panChrono, BorderLayout.EAST);
 		panFirst.add(lblTop, BorderLayout.NORTH);
+		dialIncub.add(panDialog);
 		tfArrive.setPreferredSize(new java.awt.Dimension(200, 200));
 		btnStart.setPreferredSize(new java.awt.Dimension(50, 35));
 		lblChrono.setHorizontalTextPosition(JLabel.CENTER);
@@ -213,6 +244,10 @@ public class Regate extends JFrame implements ActionListener {
 				tfArrive.setText(it.getNumBateau() + " " + it.getNomBateau() + " " + it.getTimerBateau() + "\n");
 			}
 			bdd.close();
+		}
+		if(e.getSource() == btnAbandon) {
+			dialIncub.setVisible(true);
+			
 		}
 	}
 	
