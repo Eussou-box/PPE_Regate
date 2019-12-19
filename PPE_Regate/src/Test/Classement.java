@@ -12,7 +12,6 @@ public class Classement extends JFrame implements ActionListener {
 	private JPanel panClassCat2;
 	private JButton btnRetour;
 	private Accueil fenAccueil;
-	private JButton btnImprPdf;
 	private JButton btnSave;
 	private JPanel panLbl;
 	private JLabel lblCat1SH;
@@ -29,9 +28,7 @@ public class Classement extends JFrame implements ActionListener {
 		panBtn = new JPanel();
 		btnRetour = new JButton("Retour accueil");
 		btnRetour.addActionListener(this);
-		btnImprPdf = new JButton("Imprimer en PDF");
-		btnImprPdf.addActionListener(this);
-		btnSave = new JButton("Sauvegarder le PDF");
+		btnSave = new JButton("Sauvegarder document texte");
 		btnSave.addActionListener(this);
 		panLbl = new JPanel();
 		lblCat1SH = new JLabel("Catégorie 1 - Sans Handicap");
@@ -51,7 +48,6 @@ public class Classement extends JFrame implements ActionListener {
 		panBtn.setLayout(new FlowLayout());
 		panLbl.setLayout(new GridLayout(1, 4));
 		panBtn.add(btnRetour);
-		panBtn.add(btnImprPdf);
 		panBtn.add(btnSave);
 		panLbl.add(lblCat1SH);
 		panLbl.add(lblCat1AH);
@@ -79,8 +75,6 @@ public class Classement extends JFrame implements ActionListener {
 			this.dispose();
 			fenAccueil = new Accueil();
 			fenAccueil.setVisible(true);
-		} else if(e.getSource() == btnImprPdf) {
-			// aura t on seulement le temps ?
 		} else if(e.getSource() == btnSave) {
 			// same pour save dans un doc ?
 		}
