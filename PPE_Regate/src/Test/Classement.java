@@ -85,49 +85,43 @@ public class Classement extends JFrame implements ActionListener {
 	}
 	
 	public String calculTempsCompose(Bateau b) {
+		double distance = 0.0;
+		long calcultps = null;
+		String tpsCompo = "";
+		int r = b.getRatingBateau(); 
 		bdd.connect();
 		ResultSet rs = testCoBDD.getSt().executeQuery(SELECT distance FROM Regate);
 		while (rs.next()) {
 			distance = rs.getInt("distance");
 		}
 		bdd.close();
-		int r = b.getRatingBateau; 
-		String tpsCompo = ""; //dunno the type
-		long calcultps = null;
-		double handicap = 5143 / (Math.sqrt(r) + 3,5) * distance; //voir où et comment ajouter la distance
-		calcultps = b.getTimerBateau + handicap;
+		double handicap = 5143 / (Math.sqrt(r) + 3.5) * distance; //voir où et comment ajouter la distance
+		calcultps = b.getTimerBateau() + handicap;
 		return tpsCompo; //need le tp datetime pour tout convertir
 		//conv timer en milli + ajouter handicap puis tout reconvertir en hms
 	}
 	
-	public void remplirClassement() throws SQLException { //need some getters and setters dans Régate, pas osé toucher
-		String class1 = "";
-		String class1Compo = "";
-		String class2 = "";
-		String class2Compo = "";
-		if(b.getClasseBat() == 1) {
-			String query = "";
-			query += "SELECT nomBateau, timerBateau FROM Bateau ";
-			query += "WHERE classeBateau = 1 ";
-			query += "ORDER BY timerBateau";
-			bdd.connect();
-			ResultSet rs = testCoBDD.getSt().executeQuery(query);
-			while (rs.next()) {
-				class1 += j + ". " + rs.getString("nomBateau") + " - " + rs.getString("timerBateau");
-			}
-			bdd.close();
-			classCat1SH.setText(class1);
-			//prendre en compte le changement d'ordre grace au handicap
-		} else if(b.getClasseBat() == 2) {
-				
-			//prendre en compte le changement d'ordre grace au handicap
+	public void remplirClassement(int classe) throws SQLException { //need some getters and setters dans Régate, pas osé toucher
+		String classement = "";
+		int place = 0;
+		String query = "";
+		query += "SELECT nomBateau, timerBateau FROM Bateau ";
+		query += "WHERE classeBateau = 1 ";
+		query += "AND idRegate = "; //?????
+		query += "ORDER BY timerBateau";
+		bdd.connect();
+		ResultSet rs = testCoBDD.getSt().executeQuery(query);
+		while (rs.next()) {
+			place++;
+			classement += place + ". " + rs.getString("nomBateau") + " - " + rs.getString("timerBateau");
 		}
-		classCat1SH.setText(class1);
-		classCat1AH.setText(class1Compo);
-		classCat2SH.setText(class2);
-		classCat2AH.setText(class2Compo);
-	} //dunno si faire 2 méthodes pour remplir classement AH et SH ou juste une (i guess 1 plus opti
-	// avec 1 methode juste pour faire le calcul du temps compense
+		bdd.close();
+		if(classe == 1) {
+			classCat1SH.setText(classement);
+		} else if(classe == 2) {
+			classCat2SH.setText(classement);
+		}
+	}
 	
 	public static void main(String[] args) {
 		new Classement();
