@@ -69,11 +69,7 @@ public class Regate extends JFrame implements ActionListener {
 		panFirst = new JPanel();
 		panBtn = new JPanel();
 		tfArrive = new JTextField();
-		tfArrive.setPreferredSize(new java.awt.Dimension(200, 200));
-		btnStart.setPreferredSize(new java.awt.Dimension(50, 35));
 		lblChrono.setText(timerEnHMS());
-		lblChrono.setHorizontalTextPosition(CENTER);
-		lblChrono.setPreferredSize(new java.awt.Dimension(50, 50));
 		// -----------------------------
 		// Mise en place composant graphique
 		lblTop.setFont(lblFont1);
@@ -102,6 +98,10 @@ public class Regate extends JFrame implements ActionListener {
 		panFirst.add(panBtn, BorderLayout.WEST);
 		panFirst.add(panChrono, BorderLayout.EAST);
 		panFirst.add(lblTop, BorderLayout.NORTH);
+		tfArrive.setPreferredSize(new java.awt.Dimension(200, 200));
+		btnStart.setPreferredSize(new java.awt.Dimension(50, 35));
+		lblChrono.setHorizontalTextPosition(JLabel.CENTER);
+		lblChrono.setPreferredSize(new java.awt.Dimension(50, 50));
 		this.getContentPane().add(panFirst);
 		this.setVisible(true);
 	}
@@ -130,25 +130,25 @@ public class Regate extends JFrame implements ActionListener {
 	public String timerEnHMS() { // conversion chrono en String
 		String leTemps = "";
 		if(heure > 0) {
-			leTemps += df.format(heure) + " h ";
+			leTemps += df.format(heure) + ":";
 		} else {
-			leTemps += "00 h ";
+			leTemps += "00:";
 		}
 		
 		if(minute > 0) {
-			leTemps += df.format(minute) + " min ";
+			leTemps += df.format(minute) + ":";
 		} else {
-			leTemps += " 00 min ";
+			leTemps += "00:";
 		}
 		
 		if(seconde > 0) {
-			leTemps += df.format(seconde) + " sec ";
+			leTemps += df.format(seconde);
 		} else {
-			leTemps += " 00 sec ";
+			leTemps += "00";
 		}
 		
 		if(heure <= 0 && minute <= 0 && seconde <= 0) {
-			leTemps = "00 h 00 min 00 sec";
+			leTemps = "00:00:00";
 		}
 			return leTemps;
 	}
