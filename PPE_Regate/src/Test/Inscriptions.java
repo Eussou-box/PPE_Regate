@@ -3,6 +3,7 @@ package Test;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.JFrame;
 import javax.swing.*;
@@ -25,6 +26,7 @@ public class Inscriptions extends JFrame implements ActionListener {
 	private JLabel lblNomSkip;
 	private JTextField tfNomSkip;
 	private JButton btnSave;
+	private testCoBDD bdd; //ceci est un test
 //	private OuvreBDD connexion = new OuvreBDD("Database.db");
 	
 	public Inscriptions() {
@@ -32,6 +34,7 @@ public class Inscriptions extends JFrame implements ActionListener {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(500,400);
 		this.setResizable(false);
+		bdd = new testCoBDD(); //co bdd instancié
 		lePanel = new JPanel();
 		lePanel.setLayout(new BorderLayout(0,0));
 		panInscri = new JPanel();
@@ -69,21 +72,25 @@ public class Inscriptions extends JFrame implements ActionListener {
 		this.setVisible(true);
 	}
 	
-//	public void addInfos() { //need help ;;
-//        String query = "";
-//        query += "INSERT INTO TABLE VALUES (";
-//        query += "'" + tfNomVoil.getText() + "', ";
-//        query += "'" + tfClasse.getText() + "', ";
-//        query += "'" + tfRating.getText() + "', ";
-//        query += "'" + tfNumVoil.getText() + "', ";
-//        query += "'" + tfNomSkip.getText() + "' )";
+	public String addInfos() { //need help ;;
+        String query = "";
+
+        query += "INSERT INTO bateau (";
+        query += "nomBateau, ratingBateau, nomSkipper, classeBateau, numVoilier)";
+        query += " Values (";
+        query += "'" + tfNomVoil.getText() + "', ";
+        query += "'" + tfRating.getText() + "', ";
+        query += "'" + tfNomSkip.getText() + "', ";
+        query += "'" + tfClasse.getText() + "', ";
+        query += "'" + tfNumVoil.getText() + "' )";// des deux pour test
 //        try {
-//            statement.executeUpdate(query);
+//           int i = statement.executeUpdate(query);
 //        } catch (SQLException e) {
 //            // TODO Auto-generated catch block
 //            e.printStackTrace();
 //        }
-//    }
+        return query;
+    }
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -93,9 +100,14 @@ public class Inscriptions extends JFrame implements ActionListener {
 			fenAccueil.setVisible(true);
 			//tout effacer ce qui a été entré dans la bdd pour cette régate ou créer statut "annulé"
 		} else if(e.getSource() == btnSave) {
-//			connexion.connect();
-//			this.addInfos();
-//			connexion.close();
+			bdd.connect();
+			try {
+				int i = testCoBDD.getSt().executeUpdate(addInfos());
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			bdd.close();
 			tfNomVoil.setText("");
 			tfClasse.setText("");
 			tfRating.setText("");

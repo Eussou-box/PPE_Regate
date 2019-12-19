@@ -18,7 +18,7 @@ public class testCoBDD {
 	
 	public void connect() {
         try {
-            Class.forName("org.sqlite.JDBC");
+            Class.forName(PILOTE);
             cnx = DriverManager.getConnection(URL + TIMEZONE, LOGIN, MDP);
             st = cnx.createStatement();
             System.out.println("Connexion a " + URL + " avec succès");
@@ -39,4 +39,22 @@ public class testCoBDD {
             e.printStackTrace();
         }
     }
+
+	public static Statement getSt() {
+		return st;
+	}
+
+	public static void setSt(Statement st) {
+		testCoBDD.st = st;
+	}
+
+	public static Connection getCnx() {
+		return cnx;
+	}
+
+	public static void setCnx(Connection cnx) {
+		testCoBDD.cnx = cnx;
+	}
+    
+    
 }
