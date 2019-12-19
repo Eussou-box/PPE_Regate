@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.swing.JFrame;
 import javax.swing.*;
 import java.awt.*;
 
@@ -30,6 +29,7 @@ public class Inscriptions extends JFrame implements ActionListener {
 //	private OuvreBDD connexion = new OuvreBDD("Database.db");
 	private JLabel lblParticip;
 	private int compteur;
+	private JPanel panLbl;
 	
 	public Inscriptions() {
 		//Variables
@@ -40,6 +40,7 @@ public class Inscriptions extends JFrame implements ActionListener {
 		this.setSize(500,400);
 		this.setResizable(false);
 		// Création des composants
+		panLbl = new JPanel();
 		bdd = new testCoBDD(); //co bdd instancié
 		lePanel = new JPanel();
 		panInscri = new JPanel();
@@ -56,7 +57,7 @@ public class Inscriptions extends JFrame implements ActionListener {
 		lblNomSkip = new JLabel("Nom du Skipper :");
 		tfNomSkip = new JTextField();
 		btnSave = new JButton("Enregistrer");
-		lblParticip = new JLabel("Participants : " + compteur);
+		lblParticip = new JLabel("Participants : ");
 		// Ajout des composants dans leurs panels respectifs
 		lePanel.setLayout(new BorderLayout(0,0));
 		panInscri.setLayout(new GridLayout(5,2));
@@ -70,11 +71,12 @@ public class Inscriptions extends JFrame implements ActionListener {
 		panInscri.add(tfNumVoil);
 		panInscri.add(lblNomSkip);
 		panInscri.add(tfNomSkip);
-		lePanel.add(lblParticip);
+		panLbl.add(lblParticip);
 		btnRetour.addActionListener(this);
 		panSouth.add(btnRetour);
 		btnSave.addActionListener(this);
 		panSouth.add(btnSave);
+		lePanel.add(panLbl, BorderLayout.EAST);
 		lePanel.add(panInscri, BorderLayout.WEST);
 		lePanel.add(panSouth, BorderLayout.SOUTH);
 		this.getContentPane().add(lePanel);
@@ -109,13 +111,15 @@ public class Inscriptions extends JFrame implements ActionListener {
 			fenAccueil.setVisible(true);
 			//ajouter  : tout effacer ce qui a été entré dans la bdd pour cette régate ou créer statut "annulé"
 		} else if(e.getSource() == btnSave) {
+			System.out.println(compteur);
 			compteur++;
 			lblParticip.setText("Participants : " + compteur);
-			if(compteur >= 20) {
-				JDialog jd = new JDialog(this, "dialog Box");
-				JLabel lblMsg = new JLabel("Nombre de participants maximal atteint !");
-				jd.add(lblMsg);
-				jd.setVisible(true);
+			if(compteur > 20) {
+//				JDialog jd = new JDialog(this, "dialog Box");
+//				JLabel lblMsg = new JLabel("Nombre de participants maximal atteint !");
+//				jd.add(lblMsg);
+//				jd.setVisible(true);
+				JOptionPane.showMessageDialog(this, "Nombre de participants maximal atteint !", "Attention", JOptionPane.WARNING_MESSAGE);
 			} else {
 				bdd.connect();
 				try {
