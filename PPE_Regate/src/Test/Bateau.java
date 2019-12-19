@@ -13,7 +13,7 @@ public class Bateau {
 		nomBateau = "";
 		classeBat = 0;
 		timerBateau = "";
-		ratingBateau = "";
+		ratingBateau = 0;
 	}
 	
 	public Bateau(int numBa, String leBat, String timeBat) { //ajouter String rating

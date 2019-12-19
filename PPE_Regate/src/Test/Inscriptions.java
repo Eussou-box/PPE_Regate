@@ -41,7 +41,7 @@ public class Inscriptions extends JFrame implements ActionListener {
 		this.setResizable(false);
 		// Création des composants
 		panLbl = new JPanel();
-		bdd = new testCoBDD(); //co bdd instancié
+		bdd = new testCoBDD(); //co bdd instanciée
 		lePanel = new JPanel();
 		panInscri = new JPanel();
 		panSouth = new JPanel();
@@ -118,7 +118,7 @@ public class Inscriptions extends JFrame implements ActionListener {
 //				JLabel lblMsg = new JLabel("Nombre de participants maximal atteint !");
 //				jd.add(lblMsg);
 //				jd.setVisible(true);
-				JOptionPane.showMessageDialog(this, "Nombre de participants maximal atteint !", "Attention", JOptionPane.WARNING_MESSAGE);
+//				JOptionPane.showMessageDialog(this, "Nombre de participants maximal atteint !", "Attention", JOptionPane.WARNING_MESSAGE);
 			} else {
 				bdd.connect();
 				try {
