@@ -27,7 +27,8 @@ public class Regate extends JFrame implements ActionListener {
 	private JLabel lblTop;
 	private JTextField tfArrive;
 	private Accueil fenAccueil;
-	private ArrayList<String> lesVoiliers;
+	private ArrayList<String> lesNumVoiliers;
+	private ArrayList<Bateau> lesVoiliers;
 	private Font lblFont1;
 	private Timer time;
 	private TimerTask task;
@@ -42,9 +43,13 @@ public class Regate extends JFrame implements ActionListener {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(700,700);
 		this.setResizable(false);
+		seconde = 0;
+		minute = 0;
+		heure = 0;
 		time = new Timer();
 		df = new DecimalFormat("00");
-		bdd = new testCoBDD(); 
+		bdd = new testCoBDD();
+		lesVoiliers = new ArrayList<Bateau>();
 		// instanciation composant graphique
 		btnStart = new JButton("Start");
 		btnStart.addActionListener(this);
@@ -63,6 +68,12 @@ public class Regate extends JFrame implements ActionListener {
 		panChrono = new JPanel();
 		panFirst = new JPanel();
 		panBtn = new JPanel();
+		tfArrive = new JTextField();
+		tfArrive.setPreferredSize(new java.awt.Dimension(200, 200));
+		btnStart.setPreferredSize(new java.awt.Dimension(50, 35));
+		lblChrono.setText(timerEnHMS());
+		lblChrono.setHorizontalTextPosition(CENTER);
+		lblChrono.setPreferredSize(new java.awt.Dimension(50, 50));
 		// -----------------------------
 		// Mise en place composant graphique
 		lblTop.setFont(lblFont1);
@@ -73,16 +84,18 @@ public class Regate extends JFrame implements ActionListener {
 		panBtnChrono.add(btnPause);
 		panBtnChrono.add(btnResume);
 		panChrono.setLayout(new BorderLayout());
-		panChrono.add(lblChrono, BorderLayout.CENTER);
-		panChrono.add(panBtnChrono, BorderLayout.SOUTH);
+		panChrono.add(lblChrono, BorderLayout.NORTH);
+		panChrono.add(panBtnChrono, BorderLayout.CENTER);
+		panChrono.add(tfArrive, BorderLayout.SOUTH);
 		panFirst.setLayout(new BorderLayout());
 		// -----------------------------
 		// Boucle création bouton
-		lesVoiliers = new ArrayList<String>();
-		addVoiliers();
-		panBtn.setLayout(new GridLayout(lesVoiliers.size(),2));
-		for(String rs : lesVoiliers) {
+		lesNumVoiliers = new ArrayList<String>();
+		addNumVoiliers();
+		panBtn.setLayout(new GridLayout(lesNumVoiliers.size(),2));
+		for(String rs : lesNumVoiliers) {
 			leBtn = new JButton(rs.toString());
+			leBtn.addActionListener(this);
 			panBtn.add(leBtn);
 		}
 		// -----------------------------
@@ -93,15 +106,15 @@ public class Regate extends JFrame implements ActionListener {
 		this.setVisible(true);
 	}
 	
-	public void addVoiliers() throws SQLException { // ajout numVoilier de la bdd dans l'arrayList
+	public void addNumVoiliers() throws SQLException { // ajout numVoilier de la bdd dans l'arrayList
 		bdd.connect();
 		ResultSet rs = testCoBDD.getSt().executeQuery("SELECT * from bateau");
 		while (rs.next()) {
-		lesVoiliers.add(rs.getString("numVoilier"));
+		lesNumVoiliers.add(rs.getString("numVoilier"));
 		}
 		bdd.close();
 	}
-
+	
 	public void chrono() { // code du chrono
 		seconde++;
 		if(seconde == 60) {
@@ -180,7 +193,21 @@ public class Regate extends JFrame implements ActionListener {
 			lblChrono.setText("00 h 00 min 00 sec");
 		}
 		if (e.getSource() == leBtn) { // enregistre le temps du bateau dans la bdd et ajoute dans une zone txt le nom + num et temps du bateau
-			
+			int nbVoil = Integer.valueOf(e.getActionCommand().toString());
+			bdd.connect();
+			try {
+				int i = testCoBDD.getSt().executeUpdate("UPDATE bateau tempsBateau SET tempsBateau = " + "'" + lblChrono.getText() + "'" + "WHERE numVoilier =" + " " + nbVoil + ";");
+				ResultSet rs = testCoBDD.getSt().executeQuery("SELECT * from bateau WHERE tempsBateau IS NOT null");
+				while (rs.next()) {
+				lesVoiliers.add(new Bateau(rs.getInt("numVoilier"), rs.getString("nomBateau"), rs.getString("tempsBateau")));
+				}
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			for(Bateau it : lesVoiliers) {
+				tfArrive.setText(it.getNumBateau() + " " + it.getNomBateau() + " " + it.getTimerBateau() + "\n");
+			}
 		}
 	}
 	

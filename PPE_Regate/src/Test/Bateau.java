@@ -3,8 +3,9 @@ package Test;
 import java.util.*;
 
 public class Bateau {
+	private int numBateau;
 	private String nomBateau;
-	private int classeBat; // int ou string ?
+	private String classeBat; // int ou string ?
 	private String timerBateau; //pas mieux de mettre en mode SimpleDateFormat("HH:mm:ss:SSSS") ?
 //	private String ratingBateau; //int ou string ? 
 	
@@ -15,9 +16,9 @@ public class Bateau {
 //		ratingBateau = "";
 	}
 	
-	public Bateau(String leBat, String leType, String timeBat) { //ajouter String rating
+	public Bateau(int numBa, String leBat, String timeBat) { //ajouter String rating
+		numBateau = numBa;
 		nomBateau = leBat;
-		classeBat = leType;
 		timerBateau = timeBat;
 //		ratingBateau = rating;
 	}
@@ -44,6 +45,14 @@ public class Bateau {
 
 	public void setTimerBateau(String timerBateau) {
 		this.timerBateau = timerBateau;
+	}
+
+	public int getNumBateau() {
+		return numBateau;
+	}
+
+	public void setNumBateau(int numBateau) {
+		this.numBateau = numBateau;
 	}
 	
 //	public String getRatingBateau() {
