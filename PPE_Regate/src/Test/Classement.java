@@ -6,6 +6,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Classement extends JFrame implements ActionListener {
 	private JPanel panneau;
@@ -80,25 +82,43 @@ public class Classement extends JFrame implements ActionListener {
 			fenAccueil = new Accueil();
 			fenAccueil.setVisible(true);
 		} else if(e.getSource() == btnSave) {
-			// same pour save dans un doc ?
+			// pas le temps ?
 		}
 	}
 	
-	public String calculTempsCompose(Bateau b) {
+	public String calculTempsCompose() {
 		double distance = 0.0;
-		long calcultps = null;
-		String tpsCompo = "";
-		int r = b.getRatingBateau(); 
+		int tpsCompo = 0;
+		int r = 0; 
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+		
+		// on obtient la distance
 		bdd.connect();
-		ResultSet rs = testCoBDD.getSt().executeQuery(SELECT distance FROM Regate);
+		ResultSet rs = testCoBDD.getSt().executeQuery("SELECT distance FROM Regate WHERE idRegate = "); //?????
 		while (rs.next()) {
 			distance = rs.getInt("distance");
 		}
+		
+		//on obtient le tempsBateau et son rating -> faire le calcul
+		String query = "";
+		query += "SELECT tempsBateau, ratingBateau FROM Bateau WHERE idRegate = "; //?????
+//		query += "WHERE idRegate = "; //?????
+//		query += "ORDER BY tempsBateau";
+		ResultSet rs2 = testCoBDD.getSt().executeQuery(query);
+		while (rs2.next()) {
+			r = rs2.getInt("ratingBateau");
+			double handicap = 5143 / (Math.sqrt(r) + 3.5) * distance;
+			Date tpsSec = sdf.parse(rs2.getString("tempsBateau"));
+			long tpsSec2 = tpsSec.getTime() / (24 * 60 * 60);
+			tpsCompo = (int) (tpsSec2 + handicap);
+			
+		}
 		bdd.close();
-		double handicap = 5143 / (Math.sqrt(r) + 3.5) * distance; //voir où et comment ajouter la distance
-		calcultps = b.getTimerBateau() + handicap;
-		return tpsCompo; //need le tp datetime pour tout convertir
-		//conv timer en milli + ajouter handicap puis tout reconvertir en hms
+		
+		
+		
+		double handicap = 5143 / (Math.sqrt(r) + 3.5) * distance;
+		return tpsCompo;
 	}
 	
 	public void remplirClassement(int classe) throws SQLException { //need some getters and setters dans Régate, pas osé toucher
@@ -118,8 +138,10 @@ public class Classement extends JFrame implements ActionListener {
 		bdd.close();
 		if(classe == 1) {
 			classCat1SH.setText(classement);
+			classCat1AH.setText(classement);
 		} else if(classe == 2) {
 			classCat2SH.setText(classement);
+			classCat2AH.setText(classement);
 		}
 	}
 	
