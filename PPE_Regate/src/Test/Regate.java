@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 
 public class Regate extends JFrame implements ActionListener {
@@ -23,8 +25,9 @@ public class Regate extends JFrame implements ActionListener {
 	private JButton btnStop;
 	private JLabel lblChrono;
 	private JLabel lblTop;
+	private JTextField tfArrive;
 	private Accueil fenAccueil;
-	private ArrayList<Bateau> lesVoiliers;
+	private ArrayList<String> lesVoiliers;
 	private Font lblFont1;
 	private Timer time;
 	private TimerTask task;
@@ -32,15 +35,17 @@ public class Regate extends JFrame implements ActionListener {
 	private int minute;
 	private int heure;
 	private DecimalFormat df;
+	private testCoBDD bdd;
 	
-	public Regate() {
+	public Regate() throws SQLException {
 		this.setTitle("Régate");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(700,700);
 		this.setResizable(false);
 		time = new Timer();
 		df = new DecimalFormat("00");
-		//leChrono = new Test();
+		bdd = new testCoBDD(); 
+		// instanciation composant graphique
 		btnStart = new JButton("Start");
 		btnStart.addActionListener(this);
 		btnPause = new JButton("Pause Chrono");
@@ -49,33 +54,38 @@ public class Regate extends JFrame implements ActionListener {
 		btnResume.addActionListener(this);
 		btnStop = new JButton("Stop");
 		btnStop.addActionListener(this);
+		btnRetour = new JButton("Retour à l'Accueil");
+		btnRetour.addActionListener(this);
 		lblChrono = new JLabel();
 		lblTop = new JLabel("Bienvenue sur la page de gestion de la régate");
 		lblFont1 = new Font("Arial", Font.BOLD, 20);
+		panBtnChrono = new JPanel(new GridLayout(2,2));
+		panChrono = new JPanel();
+		panFirst = new JPanel();
+		panBtn = new JPanel();
+		// -----------------------------
+		// Mise en place composant graphique
 		lblTop.setFont(lblFont1);
 		lblChrono.setFont(lblFont1);
 		lblTop.setHorizontalAlignment(JLabel.CENTER);
-		panBtnChrono = new JPanel(new GridLayout(2,2));
 		panBtnChrono.add(btnStart);
 		panBtnChrono.add(btnStop);
 		panBtnChrono.add(btnPause);
 		panBtnChrono.add(btnResume);
-		panChrono = new JPanel();
 		panChrono.setLayout(new BorderLayout());
 		panChrono.add(lblChrono, BorderLayout.CENTER);
 		panChrono.add(panBtnChrono, BorderLayout.SOUTH);
-		panFirst = new JPanel();
 		panFirst.setLayout(new BorderLayout());
-		panBtn = new JPanel();
-		lesVoiliers = new ArrayList<Bateau>();
+		// -----------------------------
+		// Boucle création bouton
+		lesVoiliers = new ArrayList<String>();
 		addVoiliers();
 		panBtn.setLayout(new GridLayout(lesVoiliers.size(),2));
-		for(Bateau rs : lesVoiliers) {
-			leBtn = new JButton(rs.getNomBateau());
+		for(String rs : lesVoiliers) {
+			leBtn = new JButton(rs.toString());
 			panBtn.add(leBtn);
 		}
-		btnRetour = new JButton("Retour à l'Accueil");
-		btnRetour.addActionListener(this);
+		// -----------------------------
 		panFirst.add(panBtn, BorderLayout.WEST);
 		panFirst.add(panChrono, BorderLayout.EAST);
 		panFirst.add(lblTop, BorderLayout.NORTH);
@@ -83,18 +93,16 @@ public class Regate extends JFrame implements ActionListener {
 		this.setVisible(true);
 	}
 	
-	public void addVoiliers() {
-		lesVoiliers.add(new Bateau("Les Joyeux Coquins","1", ""));
-		lesVoiliers.add(new Bateau("Le paquebotte","1", ""));
-		lesVoiliers.add(new Bateau("Les SIO Skippers","1", ""));
-		lesVoiliers.add(new Bateau("Fnatic Voilier","1", ""));
-		lesVoiliers.add(new Bateau("SEND NUDES","1", ""));
-		lesVoiliers.add(new Bateau("Les Lolis For Ever","1", ""));
-		lesVoiliers.add(new Bateau("Nan mais Allo quoi","1", ""));
-		lesVoiliers.add(new Bateau("I'm wet","1", ""));
+	public void addVoiliers() throws SQLException { // ajout numVoilier de la bdd dans l'arrayList
+		bdd.connect();
+		ResultSet rs = testCoBDD.getSt().executeQuery("SELECT * from bateau");
+		while (rs.next()) {
+		lesVoiliers.add(rs.getString("numVoilier"));
+		}
+		bdd.close();
 	}
-	
-	public void chrono() {
+
+	public void chrono() { // code du chrono
 		seconde++;
 		if(seconde == 60) {
 			seconde = 0;
@@ -106,7 +114,7 @@ public class Regate extends JFrame implements ActionListener {
 		}
 	}
 	
-	public String timerEnHMS() {
+	public String timerEnHMS() { // conversion chrono en String
 		String leTemps = "";
 		if(heure > 0) {
 			leTemps += df.format(heure) + " h ";
@@ -134,12 +142,12 @@ public class Regate extends JFrame implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == btnRetour) {
+		if(e.getSource() == btnRetour) { // retour page d'accueil
 			fenAccueil = new Accueil();
 			this.dispose();
 			fenAccueil.setVisible(true);
 		} 
-		if (e.getSource() == btnStart) {
+		if (e.getSource() == btnStart) { // mise en place du chrono
 			heure = 0;
 			minute = 0;
 			seconde = 0;
@@ -151,11 +159,11 @@ public class Regate extends JFrame implements ActionListener {
 			};
 			time.schedule(task,0, 1000);
 		}
-		if (e.getSource() == btnPause) {
+		if (e.getSource() == btnPause) { // pause du chrono
 			//leChrono.pause();
 			task.cancel();
 		}
-		if (e.getSource() == btnResume) {
+		if (e.getSource() == btnResume) { // relance le chrono
 			//leChrono.resume();
 			task = new TimerTask(){
 				public void run() {
@@ -165,18 +173,18 @@ public class Regate extends JFrame implements ActionListener {
 			};
 			time.schedule(task,0, 1000);
 		}
-		if (e.getSource() == btnStop) {
+		if (e.getSource() == btnStop) { // Stop le chrono et purge la Task et reset le chrono
 			//leChrono.stop();
 			task.cancel();
 			time.purge();
 			lblChrono.setText("00 h 00 min 00 sec");
 		}
-		if (e.getSource() == leBtn) {
+		if (e.getSource() == leBtn) { // enregistre le temps du bateau dans la bdd et ajoute dans une zone txt le nom + num et temps du bateau
 			
 		}
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		new Regate();
 	}
 
