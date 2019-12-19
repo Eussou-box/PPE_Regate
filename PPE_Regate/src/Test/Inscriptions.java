@@ -28,15 +28,20 @@ public class Inscriptions extends JFrame implements ActionListener {
 	private JButton btnSave;
 	private testCoBDD bdd; //ceci est un test
 //	private OuvreBDD connexion = new OuvreBDD("Database.db");
+	private JLabel lblParticip;
+	private int compteur;
 	
 	public Inscriptions() {
+		//Variables
+		compteur = 0;
+		//Paramètres de base fenêtre
 		this.setTitle("Historique des Régates");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(500,400);
 		this.setResizable(false);
+		// Création des composants
 		bdd = new testCoBDD(); //co bdd instancié
 		lePanel = new JPanel();
-		lePanel.setLayout(new BorderLayout(0,0));
 		panInscri = new JPanel();
 		panSouth = new JPanel();
 		btnRetour = new JButton("Retour à l'Accueil");
@@ -51,6 +56,9 @@ public class Inscriptions extends JFrame implements ActionListener {
 		lblNomSkip = new JLabel("Nom du Skipper :");
 		tfNomSkip = new JTextField();
 		btnSave = new JButton("Enregistrer");
+		lblParticip = new JLabel("Participants : " + compteur);
+		// Ajout des composants dans leurs panels respectifs
+		lePanel.setLayout(new BorderLayout(0,0));
 		panInscri.setLayout(new GridLayout(5,2));
 		panInscri.add(lblNomVoil);
 		panInscri.add(tfNomVoil);
@@ -62,6 +70,7 @@ public class Inscriptions extends JFrame implements ActionListener {
 		panInscri.add(tfNumVoil);
 		panInscri.add(lblNomSkip);
 		panInscri.add(tfNomSkip);
+		lePanel.add(lblParticip);
 		btnRetour.addActionListener(this);
 		panSouth.add(btnRetour);
 		btnSave.addActionListener(this);
@@ -97,21 +106,30 @@ public class Inscriptions extends JFrame implements ActionListener {
 			fenAccueil = new Accueil();
 			this.dispose();
 			fenAccueil.setVisible(true);
-			//tout effacer ce qui a été entré dans la bdd pour cette régate ou créer statut "annulé"
+			//ajouter  : tout effacer ce qui a été entré dans la bdd pour cette régate ou créer statut "annulé"
 		} else if(e.getSource() == btnSave) {
-			bdd.connect();
-			try {
-				int i = testCoBDD.getSt().executeUpdate(addInfos());
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			compteur++;
+			lblParticip.setText("Participants : " + compteur);
+			if(compteur >= 20) {
+				JDialog jd = new JDialog(this, "dialog Box");
+				JLabel lblMsg = new JLabel("Nombre de participants maximal atteint !");
+				jd.add(lblMsg);
+				jd.setVisible(true);
+			} else {
+				bdd.connect();
+				try {
+					int i = testCoBDD.getSt().executeUpdate(addInfos());
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				bdd.close();
+				tfNomVoil.setText("");
+				tfClasse.setText("");
+				tfRating.setText("");
+				tfNumVoil.setText("");
+				tfNomSkip.setText("");
 			}
-			bdd.close();
-			tfNomVoil.setText("");
-			tfClasse.setText("");
-			tfRating.setText("");
-			tfNumVoil.setText("");
-			tfNomSkip.setText("");
 			//enregistrer toutes les infos dans la bdd -> tester tout ce bordel
 		}
 	}
