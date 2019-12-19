@@ -113,7 +113,7 @@ public class Regate extends JFrame implements ActionListener {
 			heure++;
 		}
 	}
-	
+	// muscle
 	public String timerEnHMS() { // conversion chrono en String
 		String leTemps = "";
 		if(heure > 0) {
