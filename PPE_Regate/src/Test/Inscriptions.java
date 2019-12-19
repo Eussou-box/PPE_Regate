@@ -83,7 +83,7 @@ public class Inscriptions extends JFrame implements ActionListener {
 		this.setVisible(true);
 	}
 	
-	public String addInfos() { //need help ;;
+	public String addInfos() {
         String query = "";
         query += "INSERT INTO bateau (";
         query += "nomBateau, ratingBateau, nomSkipper, classeBateau, numVoilier)";
