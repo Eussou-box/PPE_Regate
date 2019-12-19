@@ -208,6 +208,7 @@ public class Regate extends JFrame implements ActionListener {
 			for(Bateau it : lesVoiliers) {
 				tfArrive.setText(it.getNumBateau() + " " + it.getNomBateau() + " " + it.getTimerBateau() + "\n");
 			}
+			bdd.close();
 		}
 	}
 	
