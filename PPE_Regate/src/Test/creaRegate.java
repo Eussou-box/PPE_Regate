@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 import javax.swing.*;
 import java.awt.*;
-
+//
 public class creaRegate  extends JFrame implements ActionListener{
 	private Accueil fenAccueil;
 	private JButton btnSave;

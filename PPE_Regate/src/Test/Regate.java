@@ -140,7 +140,7 @@ public class Regate extends JFrame implements ActionListener {
 		this.getContentPane().add(panFirst);
 		this.setVisible(true);
 	}
-	
+	//
 	public void addNumVoiliers() throws SQLException { // ajout numVoilier de la bdd dans l'arrayList
 		bdd.connect();
 		ResultSet rs = testCoBDD.getSt().executeQuery("SELECT * from voilier");
