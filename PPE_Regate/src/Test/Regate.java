@@ -91,7 +91,7 @@ public class Regate extends JFrame implements ActionListener {
 				System.out.println(incub);
 					bdd.connect();
 					try {
-						int i = testCoBDD.getSt().executeUpdate("UPDATE bateau tempsBateau SET tempsBateau = '00:00:00' WHERE numVoilier =" + " " + incub + ";");
+						int i = testCoBDD.getSt().executeUpdate("UPDATE participe heurArrive SET heurArrive = '00:00:00' WHERE numVoilier =" + " " + incub + ";");
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -143,7 +143,7 @@ public class Regate extends JFrame implements ActionListener {
 	
 	public void addNumVoiliers() throws SQLException { // ajout numVoilier de la bdd dans l'arrayList
 		bdd.connect();
-		ResultSet rs = testCoBDD.getSt().executeQuery("SELECT * from bateau");
+		ResultSet rs = testCoBDD.getSt().executeQuery("SELECT * from voilier");
 		while (rs.next()) {
 		lesNumVoiliers.add(rs.getString("numVoilier"));
 		}
@@ -231,10 +231,10 @@ public class Regate extends JFrame implements ActionListener {
 			int nbVoil = Integer.valueOf(e.getActionCommand().toString());
 			bdd.connect();
 			try {
-				int i = testCoBDD.getSt().executeUpdate("UPDATE bateau tempsBateau SET tempsBateau = " + "'" + lblChrono.getText() + "'" + "WHERE numVoilier =" + " " + nbVoil + ";");
-				ResultSet rs = testCoBDD.getSt().executeQuery("SELECT * from bateau WHERE tempsBateau IS NOT null");
+				int i = testCoBDD.getSt().executeUpdate("UPDATE participe heurArrive SET heurArrive = " + "'" + lblChrono.getText() + "'" + "WHERE numVoilier =" + " " + nbVoil + ";");
+				ResultSet rs = testCoBDD.getSt().executeQuery("SELECT v.numVoilier, v.nomVoilier, p.heurArrive from voilier v INNER JOIN participe p ON p.numVoilier = v.numVoilier WHERE heurArrive IS NOT null");
 				while (rs.next()) {
-				lesVoiliers.add(new Bateau(rs.getInt("numVoilier"), rs.getString("nomBateau"), rs.getString("tempsBateau")));
+				lesVoiliers.add(new Bateau(rs.getInt("numVoilier"), rs.getString("nomVoilier"), rs.getString("heurArrive")));
 				}
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block

@@ -115,9 +115,6 @@ public class Classement extends JFrame implements ActionListener {
 			
 		}
 		bdd.close();
-		
-		
-		
 		double handicap = 5143 / (Math.sqrt(r) + 3.5) * distance;
 		return tpsCompo;
 	}

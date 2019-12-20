@@ -83,24 +83,24 @@ public class Inscriptions extends JFrame implements ActionListener {
 		this.setVisible(true);
 	}
 	
-	public String addInfos() {
-        String query = "";
-        query += "INSERT INTO bateau (";
-        query += "nomBateau, ratingBateau, nomSkipper, classeBateau, numVoilier)";
-        query += " Values (";
-        query += "'" + tfNomVoil.getText() + "', ";
-        query += "'" + tfRating.getText() + "', ";
-        query += "'" + tfNomSkip.getText() + "', ";
-        query += "'" + tfClasse.getText() + "', ";
-        query += "'" + tfNumVoil.getText() + "' )";// des deux pour test
+//	public String addInfos() {
+//        String query = "";
+//        query += "INSERT INTO bateau (";
+//        query += "nomBateau, ratingBateau, nomSkipper, classeBateau, numVoilier)";
+//        query += " Values (";
+//        query += "'" + tfNomVoil.getText() + "', ";
+//        query += "'" + tfRating.getText() + "', ";
+//        query += "'" + tfNomSkip.getText() + "', ";
+//        query += "'" + tfClasse.getText() + "', ";
+//        query += "'" + tfNumVoil.getText() + "' )";// des deux pour test
 //        try {
 //           int i = statement.executeUpdate(query);
 //        } catch (SQLException e) {
 //            // TODO Auto-generated catch block
 //            e.printStackTrace();
 //        }
-        return query;
-    }
+//        return query;
+ //   }
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -114,15 +114,17 @@ public class Inscriptions extends JFrame implements ActionListener {
 			compteur++;
 			lblParticip.setText("Participants : " + compteur);
 			if(compteur > 20) {
-//				JDialog jd = new JDialog(this, "dialog Box");
+//				//JDialog jd = new JDialog(this, "dialog Box");
 //				JLabel lblMsg = new JLabel("Nombre de participants maximal atteint !");
 //				jd.add(lblMsg);
 //				jd.setVisible(true);
-//				JOptionPane.showMessageDialog(this, "Nombre de participants maximal atteint !", "Attention", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Nombre de participants maximal atteint !", "Attention", JOptionPane.WARNING_MESSAGE);
 			} else {
 				bdd.connect();
 				try {
-					int i = testCoBDD.getSt().executeUpdate(addInfos());
+					int i = testCoBDD.getSt().executeUpdate("INSERT INTO voilier (numVoilier, nomVoilier, rating) VALUES (" + "'" + tfNumVoil.getText() + "', " + "'" + tfNomVoil.getText() + "', " + "'" + tfRating.getText() + "' )" );
+					int j = testCoBDD.getSt().executeUpdate("INSERT INTO skipper (nomSkipper) VALUES (" + "'" + tfNomSkip.getText() + "' )");
+					int k = testCoBDD.getSt().executeUpdate("INSERT INTO participe (classe) VALUES (" + "'" + tfClasse.getText() + "' )");
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
