@@ -30,6 +30,12 @@ public class Classement extends JFrame implements ActionListener {
 	private testCoBDD bdd;
 	
 	public Classement() {
+		// Paramètres de base fenêtre
+		this.setTitle("Classement");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(1000, 500);
+		this.setResizable(false);
+		// Création des composants
 		bdd = new testCoBDD();
 		panneau = new JPanel();
 		panBtn = new JPanel();
@@ -52,6 +58,7 @@ public class Classement extends JFrame implements ActionListener {
 		classCat2SH.setEditable(false);
 		classCat2AH = new JTextArea(20, 25);
 		classCat2AH.setEditable(false);
+		// Ajout des composants dans leurs panels respectifs
 		panBtn.setLayout(new FlowLayout());
 		panLbl.setLayout(new GridLayout(1, 4));
 		panBtn.add(btnRetour);
@@ -69,12 +76,8 @@ public class Classement extends JFrame implements ActionListener {
 		panneau.add(panClassCat1, BorderLayout.WEST);
 		panneau.add(panClassCat2, BorderLayout.EAST);
 		panneau.add(panLbl, BorderLayout.NORTH);
-		this.setTitle("Classement");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(1000, 500);
-		this.setResizable(false);
-		this.setVisible(true);
 		this.getContentPane().add(panneau);
+		this.setVisible(true);
 	}
 	
 	public void actionPerformed(ActionEvent e) { 
@@ -83,13 +86,14 @@ public class Classement extends JFrame implements ActionListener {
 			fenAccueil = new Accueil();
 			fenAccueil.setVisible(true);
 		} else if(e.getSource() == btnSave) {
-			// pas le temps ?
+			// pas le temps  i guess
 		}
 	}
 	
-	public int calculTempsCompose() throws SQLException, ParseException {
+	public void calculTempsCompose() throws SQLException, ParseException {
 		double distance = 0.0;
-		int tpsCompo = 0;
+		int totalSec= 0;
+		String tpsCompo = "";
 		int r = 0; 
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 		
@@ -100,54 +104,64 @@ public class Classement extends JFrame implements ActionListener {
 			distance = rs.getInt("distance");
 		}
 		
-		//on obtient le tempsBateau et son rating -> faire le calcul
-		String query = "";
-		query += "SELECT tempsBateau, ratingBateau FROM Bateau WHERE idRegate = "; //?????
-//		query += "WHERE idRegate = "; //?????
-//		query += "ORDER BY tempsBateau";
-		ResultSet rs2 = testCoBDD.getSt().executeQuery(query);
+		//on prélève le tempsBateau et son rating
+		ResultSet rs2 = testCoBDD.getSt().executeQuery("SELECT tempsBateau, ratingBateau FROM Bateau WHERE idRegate = ");
 		while (rs2.next()) {
+			// on fait le calcul pour avoir le temps composé
 			r = rs2.getInt("ratingBateau");
 			double handicap = 5143 / (Math.sqrt(r) + 3.5) * distance;
 			Date tpsSec = sdf.parse(rs2.getString("tempsBateau"));
-			long tpsSec2 = tpsSec.getTime() / (24 * 60 * 60);
-			tpsCompo = (int) (tpsSec2 + handicap);
+			long tpsSec2 = tpsSec.getTime() / (24 * 60 * 60); // ou juste 60 * 60 ??
+			totalSec = (int) (tpsSec2 + handicap);
+			int h = totalSec / 3600;
+			int min = (totalSec % 3600) / 60;
+			int sec = (totalSec % 3600) % 60;
+			tpsCompo = h + ":" + min + ":" + sec;
 			
+			// on ajoute le résultat obtenu dans la bdd
+			ResultSet rs3 = testCoBDD.getSt().executeQuery("UPDATE Participe tempsCompose SET tempsCompose = " + tpsCompo);
 		}
 		bdd.close();
-		
-		
-		
-		double handicap = 5143 / (Math.sqrt(r) + 3.5) * distance;
-		return tpsCompo;
 	}
 	
 	public void remplirClassement(int classe) throws SQLException { //need some getters and setters dans Régate, pas osé toucher
-		String classement = "";
+		String classementSH = "";
+		String classementAH = "";
 		int place = 0;
+		
+		//on crée la requête SQL permattant de récupérer les données qui nous intéressent
 		String query = "";
-		query += "SELECT nomBateau, timerBateau FROM Bateau ";
-		query += "WHERE classeBateau = 1 ";
-		query += "AND idRegate = "; //?????
-		query += "ORDER BY timerBateau";
+		query += "SELECT B.nomBateau, B.timerBateau P.tempsCompense FROM Bateau B ";
+		query += "INNER JOIN Participe P ON B.numVoilier = P.numVoilier";
+		query += "WHERE B.classeBateau = " + classe + " ";
+		query += "AND P.idRegate = "; //?????
+		query += "ORDER BY B.timerBateau";
+		
+		//on prélève les données nécessaires dans la bdd
 		bdd.connect();
 		ResultSet rs = testCoBDD.getSt().executeQuery(query);
 		while (rs.next()) {
 			place++;
-			classement += place + ". " + rs.getString("nomBateau") + " - " + rs.getString("timerBateau");
+			classementSH += place + ". " + rs.getString("B.nomBateau") + " - " + rs.getString("B.timerBateau");
+			classementAH += place + ". " + rs.getString("B.nomBateau") + " - " + rs.getString("P.tempsCompense");
 		}
 		bdd.close();
+		
+		//on remplit les différents classements avec les données récupérées
 		if(classe == 1) {
-			classCat1SH.setText(classement);
-			classCat1AH.setText(classement);
+			classCat1SH.setText(classementSH);
+			classCat1AH.setText(classementAH);
 		} else if(classe == 2) {
-			classCat2SH.setText(classement);
-			classCat2AH.setText(classement);
+			classCat2SH.setText(classementSH);
+			classCat2AH.setText(classementAH);
 		}
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException, ParseException {
 		new Classement();
+//		calculTempsCompose();
+//		remplirClassement(1);
+//		remplirClassement(2); // pb static + regarder pour idRegate et fini normalement
 	}
 
 
