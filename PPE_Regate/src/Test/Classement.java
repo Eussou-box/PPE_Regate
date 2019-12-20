@@ -17,7 +17,6 @@ public class Classement extends JFrame implements ActionListener {
 	private JPanel panClassCat2;
 	private JButton btnRetour;
 	private Accueil fenAccueil;
-	private JButton btnSave;
 	private JPanel panLbl;
 	private JLabel lblCat1SH;
 	private JLabel lblCat1AH;
@@ -41,8 +40,6 @@ public class Classement extends JFrame implements ActionListener {
 		panBtn = new JPanel();
 		btnRetour = new JButton("Retour accueil");
 		btnRetour.addActionListener(this);
-		btnSave = new JButton("Sauvegarder document texte");
-		btnSave.addActionListener(this);
 		panLbl = new JPanel();
 		lblCat1SH = new JLabel("Catégorie 1 - Sans Handicap");
 		lblCat1AH = new JLabel("Catégorie 1 - Avec Handicap");
@@ -62,7 +59,6 @@ public class Classement extends JFrame implements ActionListener {
 		panBtn.setLayout(new FlowLayout());
 		panLbl.setLayout(new GridLayout(1, 4));
 		panBtn.add(btnRetour);
-		panBtn.add(btnSave);
 		panLbl.add(lblCat1SH);
 		panLbl.add(lblCat1AH);
 		panClassCat1.add(classCat1SH);
@@ -85,8 +81,6 @@ public class Classement extends JFrame implements ActionListener {
 			this.dispose();
 			fenAccueil = new Accueil();
 			fenAccueil.setVisible(true);
-		} else if(e.getSource() == btnSave) {
-			// pas le temps  i guess
 		}
 	}
 	
