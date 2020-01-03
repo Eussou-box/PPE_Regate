@@ -83,7 +83,7 @@ public class Classement extends JFrame implements ActionListener {
 			fenAccueil = new Accueil();
 			fenAccueil.setVisible(true);
 		} else if(e.getSource() == btnSave) {
-			// pas le temps ?
+			// ???
 		}
 	}
 	
@@ -102,7 +102,7 @@ public class Classement extends JFrame implements ActionListener {
 		
 		//on obtient le tempsBateau et son rating -> faire le calcul
 		String query = "";
-		query += "SELECT tempsBateau, ratingBateau FROM Bateau WHERE idRegate = "; //?????
+		query += "SELECT heurArrive, ratingVoilier FROM Bateau WHERE idRegate = "; //?????
 //		query += "WHERE idRegate = "; //?????
 //		query += "ORDER BY tempsBateau";
 		ResultSet rs2 = testCoBDD.getSt().executeQuery(query);
